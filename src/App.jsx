@@ -82,7 +82,7 @@ function App() {
             <button onClick={() => handleScroll('experience')} className="hover:text-blue-400 transition-colors">Experience</button>
             <button onClick={() => handleScroll('projects')} className="hover:text-blue-400 transition-colors">Projects</button>
             <button onClick={() => handleScroll('contact')} className="hover:text-blue-400 transition-colors">Contact</button>
-          
+
           </div>
           {/* Mobile Burger Icon */}
           <div className="md:hidden flex items-center">
@@ -196,73 +196,101 @@ function App() {
       </section>
 
       {/* Work Experience Section */}
-    
-     <section id="experience" className="py-20 bg-black text-white">
+      <section id="experience" className="py-20 bg-black text-white">
         <div className="container mx-auto px-6">
-          <motion.h3 className="text-4xl font-bold text-center mb-12 text-blue-400" {...fadeInUp}>
+          <motion.h3
+            className="text-4xl font-bold text-center mb-12 text-blue-400"
+            {...fadeInUp}
+          >
             Work Experience
           </motion.h3>
+
           <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-600 h-full"></div>
+            {/* Center line — desktop only */}
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-600 h-full"></div>
+
             <motion.div className="space-y-12" {...stagger}>
-              <motion.div className="flex items-center w-full" {...fadeInUp}>
-                <div className="w-1/2 pr-8 text-right">
-                  <h4 className="text-2xl font-semibold text-blue-400">Frontend Web Development (Personal Projects)</h4>
+
+              {/* Experience 1 */}
+              <motion.div
+                className="flex flex-col md:flex-row items-start md:items-center w-full"
+                {...fadeInUp}
+              >
+                <div className="w-full md:w-1/2 md:pr-8 text-left md:text-right mb-4 md:mb-0">
+                  <h4 className="text-2xl font-semibold text-blue-400">
+                    Frontend Web Development (Personal Projects)
+                  </h4>
                   <p className="text-gray-400">Aug 2024 - Present</p>
                 </div>
-                <div className="w-4 h-4 bg-blue-600 rounded-full border-4 border-black shadow-lg"></div>
-                <div className="w-1/2 pl-8">
-                  <ul className="list-disc list-inside">
+
+                <div className="hidden md:block w-4 h-4 bg-blue-600 rounded-full border-4 border-black shadow-lg"></div>
+
+                <div className="w-full md:w-1/2 md:pl-8">
+                  <ul className="list-disc list-inside text-gray-300">
                     <li>Developed multiple frontend applications using React.js and Tailwind CSS.</li>
                     <li>Built responsive websites with optimal performance.</li>
                     <li>Integrated APIs for smooth data flow.</li>
                   </ul>
                 </div>
               </motion.div>
-              <motion.div className="flex items-center w-full" {...fadeInUp}>
-                <div className="w-1/2 pr-8 text-right">
-                  <h4 className="text-2xl font-semibold text-blue-400">Frontend Development Internship</h4>
-                  <p className="text-gray-400">DevelopersHub Corporation (Remote) | June 10 - July 26, 2025</p>
+
+              {/* Experience 2 */}
+              <motion.div
+                className="flex flex-col md:flex-row items-start md:items-center w-full"
+                {...fadeInUp}
+              >
+                <div className="w-full md:w-1/2 md:pr-8 text-left md:text-right mb-4 md:mb-0">
+                  <h4 className="text-2xl font-semibold text-blue-400">
+                    Frontend Development Internship
+                  </h4>
+                  <p className="text-gray-400">
+                    DevelopersHub Corporation (Remote) | June 10 - July 26, 2025
+                  </p>
                 </div>
-                <div className="w-4 h-4 bg-blue-600 rounded-full border-4 border-black shadow-lg"></div>
-                <div className="w-1/2 pl-8">
-                  <ul className="list-disc list-inside">
+
+                <div className="hidden md:block w-4 h-4 bg-blue-600 rounded-full border-4 border-black shadow-lg"></div>
+
+                <div className="w-full md:w-1/2 md:pl-8">
+                  <ul className="list-disc list-inside text-gray-300">
                     <li>Developed e-commerce frontend with animations.</li>
                     <li>Implemented search, filtering, and cart features.</li>
                   </ul>
                 </div>
               </motion.div>
+
+              {/* Experience 3 — NAVTTC */}
+              <motion.div
+                className="flex flex-col md:flex-row items-start md:items-center w-full"
+                {...fadeInUp}
+              >
+                <div className="w-full md:w-1/2 md:pr-8 text-left md:text-right mb-4 md:mb-0">
+                  <h4 className="text-2xl font-semibold text-blue-400">
+                    Web Development Trainee (NAVTTC)
+                  </h4>
+                  <p className="text-gray-400">
+                    Encoder Bytes Software House | 3 Months
+                  </p>
+                </div>
+
+                <div className="hidden md:block w-4 h-4 bg-blue-600 rounded-full border-4 border-black shadow-lg"></div>
+
+                <div className="w-full md:w-1/2 md:pl-8">
+                  <ul className="list-disc list-inside text-gray-300">
+                    <li>Completed a NAVTTC-certified Web Development training program.</li>
+                    <li>Enhanced practical web development skills through hands-on projects.</li>
+                    <li>Developed NFT Marketplace and TRIPSY travel website.</li>
+                    <li>Built responsive, dynamic, and user-friendly web applications.</li>
+                    <li>Worked on real-world development workflows.</li>
+                  </ul>
+                </div>
+              </motion.div>
+
             </motion.div>
           </div>
         </div>
-      </section> 
-      <section>
-        <motion.div className="flex items-center w-full bg-black pb-8" {...fadeInUp}>
-  <div className="w-1/2 pr-8 text-right">
-    <h4 className="text-2xl font-semibold text-blue-400">
-      Web Development Trainee (NAVTTC)
-    </h4>
-    <p className="text-gray-400">
-      Encoder Bytes Software House | 3 Months
-    </p>
-  </div>
-
-  <div className="w-4 h-4 bg-blue-600 rounded-full border-4 border-black shadow-lg"></div>
-
-  <div className="w-1/2 pl-8">
-    <ul className="list-disc list-inside text-gray-300">
-      <li>Completed a NAVTTC-certified Web Development training program.</li>
-      <li>Enhanced practical web development skills through hands-on projects.</li>
-      <li>Developed fully functional websites including an NFT Marketplace and TRIPSY travel website.</li>
-      <li>Built responsive, dynamic, and user-friendly web applications.</li>
-      <li>Worked on real-world project workflows, improving problem-solving and coding practices.</li>
-    </ul>
-  </div>
-</motion.div>
-
       </section>
-
       {/* Education Section */}
+
       <section id="education" className="py-20 bg-gray-800 text-black">
         <div className="container mx-auto px-6">
           <motion.h3 className="text-4xl font-bold text-center mb-12 text-white" {...fadeInUp}>
@@ -293,7 +321,7 @@ function App() {
               <img src="tripsy.PNG" alt="EchoRead" className="w-full h-48 object-cover rounded-lg mb-4" />
               <h4 className="text-2xl font-semibold mb-2 text-blue-600">Tripsy website</h4>
               <p className="text-gray-600 mb-4">React.js , Tailwind CSS, Zustand</p>
-<p>Built Tripsy, a practice-based travel website during EncoderBytes training to strengthen frontend development skills using React.js, Tailwind CSS, and responsive UI principles. and it was real world project</p>            </motion.div>
+              <p>Built Tripsy, a practice-based travel website during EncoderBytes training to strengthen frontend development skills using React.js, Tailwind CSS, and responsive UI principles. and it was real world project</p>            </motion.div>
             <motion.div
               className="bg-gray-900 text-white  p-6 rounded-lg shadow-lg overflow-hidden"
               whileHover={{ scale: 1.05, rotateY: -5 }}
@@ -304,7 +332,7 @@ function App() {
               <p className="text-gray-600 mb-4">Internship Project | React.js, Tailwind CSS, Framer Motion</p>
               <p>Built interactive UI with search, filtering,  add to cart, Product Detail page, WishList and smooth animations.</p>
             </motion.div>
-             <motion.div
+            <motion.div
               className="bg-gray-900 text-white p-6 rounded-lg shadow-lg overflow-hidden"
               whileHover={{ scale: 1.05, rotateY: -5 }}
               {...fadeInUp}
@@ -314,7 +342,7 @@ function App() {
               <p className="text-gray-600 mb-4">React.js, Tailwind CSS, Framer Motion</p>
               <p>Designed and developed a personal portfolio website as a practice project to demonstrate frontend development skills and UI design..</p>
             </motion.div>
-             <motion.div
+            <motion.div
               className="bg-gray-900 text-white p-6 rounded-lg shadow-lg overflow-hidden"
               whileHover={{ scale: 1.05, rotateY: -5 }}
               {...fadeInUp}
@@ -328,36 +356,36 @@ function App() {
         </div>
       </section>
 
-     
-       {/* contact Section  */}
+
+      {/* contact Section  */}
       <section id="contact" className="py-20 bg-gray-800 text-white">
         <div className="container mx-auto px-6 text-center">
-         <motion.h3 className="text-4xl font-bold mb-12 " {...fadeInUp}>
-           Contact           </motion.h3>
-         <div className="grid md:grid-cols-2 gap-8">
-          <motion.div {...fadeInUp}>
+          <motion.h3 className="text-4xl font-bold mb-12 " {...fadeInUp}>
+            Contact           </motion.h3>
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div {...fadeInUp}>
               <h4 className="text-2xl font-semibold mb-4">Get in Touch</h4>
-             <div className="space-y-4">
-               <div className="flex items-center justify-center">
+              <div className="space-y-4">
+                <div className="flex items-center justify-center">
                   <FaPhone className="mr-3 text-blue-600" /> 03339447275
                 </div>
                 <div className="flex items-center justify-center">
                   <FaEnvelope className="mr-3 text-blue-600" /><a href="https://kashifkhn6464ak@gmail.com">kashifkhn6464ak@gmail.com</a>
-                 </div>
-               <div className="flex items-center justify-center">
+                </div>
+                <div className="flex items-center justify-center">
                   <FaMapMarkerAlt className="mr-3 text-blue-600" /> Tehkal Bala, Peshawar, Pakistan
                 </div>
                 <div className="flex space-x-4 justify-center">
-                   <a href="https://www.linkedin.com/in/kashif-khan-malik/" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">
-                     <FaLinkedin />
+                  <a href="https://www.linkedin.com/in/kashif-khan-malik/" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">
+                    <FaLinkedin />
                   </a>
-                   <a href="https://github.com/engrkashifkhan" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">
-                     <FaGithub />
-                   </a>
-                 </div>
-               </div>
-             </motion.div>
-             <motion.form
+                  <a href="https://github.com/engrkashifkhan" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">
+                    <FaGithub />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+            <motion.form
               ref={formRef}
               onSubmit={handleFormSubmit}
               className="bg-black text-white p-6 rounded-lg shadow-lg"
@@ -411,3 +439,12 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
