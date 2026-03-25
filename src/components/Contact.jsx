@@ -1,31 +1,42 @@
 import { motion } from "framer-motion";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-const Contact = ({ formRef }) => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+const Contact = () => {
+  const formRef = useRef();
+
   const [status, setStatus] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await emailjs.sendForm(
-        "service_9g975sf",
-        "9g975sf",
+      const result = await emailjs.sendForm(
+        "service_9g975sf",        // ✅ your service ID
+        "template_232gsyj",      // ❗ REPLACE with your real template ID
         formRef.current,
-        "1dmtECDsd_Cqla7C9"
+        "1dmtECDsd_Cqla7C9"      // ✅ your public key
+        
       );
-      setStatus("Message sent successfully!");
-      setFormData({ name: "", email: "", message: "" });
-    } catch {
-      setStatus("Failed to send message.");
+
+      console.log(result.text);
+      setStatus("✅ Message sent successfully!");
+
+      // Reset form
+      formRef.current.reset();
+
+    } catch (error) {
+      console.error(error);
+      setStatus("❌ Failed to send message.");
     }
   };
 
   return (
     <section id="contact" className="py-20 bg-gray-800 text-white">
       <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8">
+
+        {/* Left Side */}
         <div className="space-y-4 text-center">
           <h3 className="text-4xl font-bold mb-6">Contact</h3>
           <p><FaPhone className="inline mr-2" /> 03339447275</p>
@@ -33,26 +44,52 @@ const Contact = ({ formRef }) => {
           <p><FaMapMarkerAlt className="inline mr-2" /> Peshawar, Pakistan</p>
 
           <div className="flex justify-center space-x-4 text-2xl">
-            <a href="https://linkedin.com" target="_blank"><FaLinkedin /></a>
-            <a href="https://github.com" target="_blank"><FaGithub /></a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+              <FaLinkedin />
+            </a>
+            <a href="https://github.com" target="_blank" rel="noreferrer">
+              <FaGithub />
+            </a>
           </div>
         </div>
 
-        <form ref={formRef} onSubmit={handleSubmit} className="bg-black p-6 rounded-lg">
-          <input className="w-full p-3 mb-4 bg-gray-800" placeholder="Name"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+        {/* Right Side Form */}
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="bg-black p-6 rounded-lg"
+        >
+          <input
+            type="text"
+            name="user_name"   // ✅ REQUIRED for EmailJS
+            placeholder="Name"
+            required
+            className="w-full p-3 mb-4 bg-gray-800"
+          />
 
-          <input className="w-full p-3 mb-4 bg-gray-800" placeholder="Email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+          <input
+            type="email"
+            name="user_email"  // ✅ REQUIRED
+            placeholder="Email"
+            required
+            className="w-full p-3 mb-4 bg-gray-800"
+          />
 
-          <textarea className="w-full p-3 mb-4 bg-gray-800 h-32" placeholder="Message"
-            value={formData.message}
-            onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
+          <textarea
+            // name="message"     // ✅ REQUIRED
+            name="user_message" 
+            placeholder="Message"
+            required
+            className="w-full p-3 mb-4 bg-gray-800 h-32"
+          />
 
-          <button className="w-full bg-blue-600 py-3 rounded">Send Message</button>
-          {status && <p className="mt-3 text-blue-400">{status}</p>}
+          <button className="w-full bg-blue-600 py-3 rounded hover:bg-blue-700 transition">
+            Send Message
+          </button>
+
+          {status && (
+            <p className="mt-3 text-center text-blue-400">{status}</p>
+          )}
         </form>
       </div>
     </section>
@@ -60,3 +97,4 @@ const Contact = ({ formRef }) => {
 };
 
 export default Contact;
+

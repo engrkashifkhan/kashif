@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <footer className="py-6 bg-black text-white text-center">
       <p>
-        © 2023 Kashif Khan |
+        © 2026 Kashif Khan |
         <button onClick={downloadCV} className="ml-2 hover:text-blue-400">
           <FaDownload className="inline mr-1" /> Download CV
         </button>
