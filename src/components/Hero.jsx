@@ -27,10 +27,10 @@ const Hero = ({ fadeInUp, handleScroll }) => {
           </div>
 
           <h2 className="text-6xl font-extrabold mb-4 text-blue-400">Kashif Khan</h2>
-          <p className="text-2xl mb-6">Frontend Web Developer</p>
+          <p className="text-2xl mb-6">MERN Stack Developer</p>
 
           <p className="max-w-3xl mx-auto text-lg leading-relaxed mb-8">
-            A passionate and dedicated Frontend Web Developer with hands-on experience in building dynamic and responsive web applications using React.js and Tailwind CSS. Skilled in designing efficient user interfaces and delivering solutions with a focus on performance and user experience.
+            Passionate MERN Stack Developer currently working as an Intern at EncoderBytes Software House, skilled in building responsive and scalable web applications using React.js, Node.js, Express.js, and MongoDB
           </p>
 
           <motion.button

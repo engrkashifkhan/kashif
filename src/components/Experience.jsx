@@ -18,25 +18,26 @@ const Experience = ({ fadeInUp, stagger }) => {
 
           <motion.div className="space-y-12" {...stagger}>
 
-            {/* Experience 1 */}
+            {/* work experience */}
             <motion.div
               className="flex flex-col md:flex-row items-start md:items-center w-full"
               {...fadeInUp}
             >
               <div className="w-full md:w-1/2 md:pr-8 text-left md:text-right mb-4 md:mb-0">
                 <h4 className="text-2xl font-semibold text-blue-400">
-                  Frontend Web Development (Personal Projects)
+                  MERN Stack Development (PSEB Internship)
                 </h4>
-                <p className="text-gray-400">Aug 2024 - Present</p>
+                <p className="text-gray-400">March 2026 - Present</p>
               </div>
 
               <div className="hidden md:block w-4 h-4 bg-blue-600 rounded-full border-4 border-black shadow-lg"></div>
 
               <div className="w-full md:w-1/2 md:pl-8">
                 <ul className="list-disc list-inside text-gray-300">
-                  <li>Developed multiple frontend applications using React.js and Tailwind CSS.</li>
-                  <li>Built responsive websites with optimal performance.</li>
-                  <li>Integrated APIs for smooth data flow.</li>
+                  <li>Developing full-stack web applications using MongoDB, Express.js, React.js, and Node.js.</li>
+                  <li>Building and integrating RESTful APIs for dynamic data handling.</li>
+                  <li>Working on real-world projects with focus on scalability and performance.</li>
+                  <li>Collaborating in a team environment and following modern development practices.</li>
                 </ul>
               </div>
             </motion.div>
