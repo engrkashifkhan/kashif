@@ -1,284 +1,227 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaComments, FaTimes, FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export default function ChatBot() {
+const portfolioData = {
+  name: "Kashif Khan",
+  role: "MERN Stack Developer",
+  summary: "Passionate MERN Stack Developer currently working as an Intern at EncoderBytes Software House, skilled in building responsive and scalable web applications using React.js, Node.js, Express.js, and MongoDB.",
+  education: "BS Software Engineering from Islamia College Peshawar (2020 – 2024)",
+  skills: [
+    "HTML (90%)", "CSS (85%)", "JavaScript (80%)", "React.js (85%)",
+    "Tailwind CSS (90%)", "Bootstrap (50%)", "Framer Motion (75%)",
+    "MongoDB (60%)", "Express.js (40%)", "Node.js (20%)"
+  ],
+  experience: [
+    {
+      title: "MERN Stack Development (PSEB Internship)",
+      company: "EncoderBytes Software House",
+      period: "March 2026 - Present",
+      details: ["Developing full-stack web applications using MERN stack", "Building RESTful APIs", "Focusing on scalability and performance"]
+    },
+    {
+      title: "Frontend Development Internship",
+      company: "DevelopersHub Corporation (Remote)",
+      period: "June 10 - July 26, 2025",
+      details: ["Developed e-commerce frontend with animations", "Implemented search, filtering, and cart features"]
+    },
+    {
+      title: "Web Development Trainee (NAVTTC)",
+      company: "Encoder Bytes Software House",
+      period: "3 Months",
+      details: ["Completed NAVTTC-certified training", "Developed NFT Marketplace and TRIPSY travel website"]
+    }
+  ],
+  projects: [
+    { title: "Tripsy Website", tech: "React.js, Tailwind CSS, Zustand", desc: "Practice-based travel website", link: "https://tripsiy.vercel.app/" },
+    { title: "E-commerce Website", tech: "React.js, Tailwind, Framer Motion", desc: "Search, filtering, cart, wishlist & animations", link: "https://ecommerce-web-design-weld.vercel.app/" },
+    { title: "Portfolio Website", tech: "React.js, Tailwind CSS", desc: "Personal portfolio to showcase frontend skills", link: "https://intern-intelligence-portfolio-delta.vercel.app/" },
+    { title: "EncoderBytes Website", tech: "Next.js, Tailwind CSS", desc: "Homepage developed during training", link: "https://encoder-byte-q6rj.vercel.app/" }
+  ],
+  contact: {
+    mobile: "03339447275",
+    email: "kashifkhn6464ak@gmail.com",
+    address: "Peshawar, Pakistan",
+    linkedin: "https://linkedin.com",
+    github: "https://github.com"
+  }
+};
+
+const SYSTEM_PROMPT = `You are the official AI assistant for Kashif Khan's portfolio. Your mission is to provide accurate, professional, and very brief information about Kashif's skills, projects, and experience.
+
+Strict Requirements:
+1. ONLY use the information provided in the context below. 
+2. Be extremely concise: limit your response to 1-2 powerful sentences. 
+3. COMPLETENESS: Never stop mid-sentence. Always finish your thought within the sentence limit.
+4. If a query is unrelated to Kashif's portfolio, politely say something formal, friendly and professional and in natural language.
+5. Tone: Professional, helpful, and direct.
+
+Context: ${JSON.stringify(portfolioData)}`;
+
+
+const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "👋 Hi! I'm Kashif's AI assistant. Ask about his MERN stack skills, projects like Tripsy, work at EncoderBytes, or how to contact him!" }
+    { role: 'bot', text: 'Hi! I\'m Kashif\'s assistant. How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [apiStatus, setApiStatus] = useState('checking');
-  const messagesEndRef = useRef(null);
+  const scrollRef = useRef(null);
 
-  // Test API connection on mount
   useEffect(() => {
-    const testAPI = async () => {
-      try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: [] })
-        });
-        setApiStatus(res.ok ? 'online' : 'offline');
-      } catch {
-        setApiStatus('offline');
-      }
-    };
-    testAPI();
-  }, []);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, isOpen]);
 
-  // Auto-scroll to latest message
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
-
-  // Load chat history from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('kashif-portfolio-chat');
-    if (saved) {
-      try { setMessages(JSON.parse(saved)); } catch (e) { console.warn('Failed to load chat history'); }
-    }
-  }, []);
-
-  // Save chat history to localStorage
-  useEffect(() => {
-    if (messages.length > 1) {
-      localStorage.setItem('kashif-portfolio-chat', JSON.stringify(messages));
-    }
-  }, [messages]);
-
-  // 🎯 ACCURATE FALLBACK RESPONSES (when AI is unavailable)
-  const getFallbackResponse = (userInput) => {
-    const lower = userInput.toLowerCase();
-    
-    // Skills & proficiency
-    if (lower.match(/skill|proficiency|percentage|tailwind|react|html|css|javascript|node|mongo|express|framer/)) {
-      return "Kashif's technical skills:\n🎨 Tailwind CSS: 90% ⭐\n📄 HTML: 90%\n💅 CSS: 85%\n⚛️ React.js: 85%\n💡 JavaScript: 80%\n✨ Framer Motion: 75%\n🗄️ MongoDB: 60%\n🔄 Express.js: 40%\n🟢 Node.js: 20% (learning)\n\nHe specializes in frontend with React + Tailwind!";
-    }
-    
-    // Projects
-    if (lower.match(/project|tripsy|ecommerce|portfolio|nft|encoderbytes website|built|created/)) {
-      return "Kashif's projects:\n🚀 Tripsy - Travel app (React+Tailwind+Zustand)\n🛒 E-commerce Site - Search, cart, animations (React+Tailwind+Framer Motion)\n👨‍💻 Portfolio - This site! (React+Tailwind)\n🏢 EncoderBytes Homepage (Next.js+Tailwind)\n🖼️ NFT Marketplace (NAVTTC training)\n\nAll built with modern, responsive design!";
-    }
-    
-    // Contact info
-    if (lower.match(/contact|email|phone|reach|hire|connect|linkedin|github|location|peshawar/)) {
-      return "📧 Email: kashifkhn6464ak@gmail.com\n📱 Phone: 03339447275\n📍 Location: Peshawar, Pakistan\n\nYou can also use the contact form on his portfolio or connect on LinkedIn/GitHub. Kashif typically responds within 24-48 hours!";
-    }
-    
-    // Work experience
-    if (lower.match(/experience|work|intern|encoder|developer|job|pseb|navttc|developerhub/)) {
-      return "Kashif's experience:\n💼 MERN Stack Intern @ EncoderBytes (Mar 2026-Present) - Building full-stack apps, REST APIs\n🖥️ Frontend Intern @ DevelopersHub (Remote, Jun-Jul 2025) - E-commerce frontend with animations\n🎓 NAVTTC Trainee @ EncoderBytes (3 months) - Certified training, built Tripsy & NFT Marketplace";
-    }
-    
-    // Education
-    if (lower.match(/education|degree|college|university|study|islamia|software engineering/)) {
-      return "Kashif earned his BS in Software Engineering from Islamia College Peshawar (2020-2024), combining formal education with hands-on development experience in modern web technologies!";
-    }
-    
-    // Availability / Hiring
-    if (lower.match(/available|hire|freelance|job|opportunity|work together|collaborate|project/)) {
-      return "Yes! 🎉 Kashif is currently interning at EncoderBytes and is open to freelance projects or full-time opportunities. He specializes in React.js + Tailwind CSS frontend development. Reach out at kashifkhn6464ak@gmail.com or 03339447275 to discuss your project!";
-    }
-    
-    // What is MERN
-    if (lower.match(/mern|stack|what is|explain/)) {
-      return "MERN stands for MongoDB, Express.js, React.js, and Node.js - a full JavaScript stack for building web applications. Kashif is currently strengthening his MERN skills as an intern at EncoderBytes, with strong expertise in the React (frontend) portion!";
-    }
-    
-    // Default helpful response
-    return "Great question! 💡 For detailed info, check Kashif's portfolio sections: Skills, Projects, or Experience. Or contact him directly at kashifkhn6464ak@gmail.com. He'd love to hear from you! 😊";
-  };
-
-  const handleSend = async (e) => {
-    e.preventDefault();
+  const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userMessage = { role: 'user', content: input.trim() };
-    const newMessages = [...messages, userMessage];
-    
-    setMessages(newMessages);
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
+
+    if (!apiKey) {
+      setMessages(prev => [...prev,
+      { role: 'user', text: input },
+      { role: 'bot', text: 'Please set a valid Gemini API Key in your .env file.' }
+      ]);
+      setInput('');
+      return;
+    }
+
+    const userMessage = input;
     setInput('');
+    setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages })
+      const genAI = new GoogleGenerativeAI(apiKey.trim());
+      // Try gemini-1.5-flash-latest as it is more likely to exist in v1beta than the exact version for some keys
+      const model = genAI.getGenerativeModel({
+        model: "gemini-2.5-flash",
+        systemInstruction: SYSTEM_PROMPT,
       });
 
-      const responseText = await res.text();
-      
-      if (!res.ok) {
-        console.error('❌ API Error:', res.status, responseText);
-        throw new Error(`API failed: ${res.status}`);
-      }
-      
-      let data;
-      try {
-        data = JSON.parse(responseText);
-      } catch (parseError) {
-        console.error('❌ JSON Parse Error:', parseError);
-        throw new Error('Invalid API response format');
-      }
-      
-      if (data.error) {
-        console.error('❌ API returned error:', data.error);
-        throw new Error(data.error);
-      }
-      
-      if (!data.reply) {
-        throw new Error('No reply in API response');
-      }
-      
-      setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
-      setApiStatus('online');
-      
+
+      // Filter out the initial bot greeting and map to Gemini format
+      const history = messages
+        .filter(msg => msg.text !== 'Hi! I\'m Kashif\'s assistant. How can I help you today?')
+        .map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.text }],
+        }));
+
+      const chat = model.startChat({
+        history: history,
+        generationConfig: {
+          maxOutputTokens: 500,
+        },
+
+      });
+
+      const result = await chat.sendMessage(userMessage);
+      const response = await result.response;
+      const text = response.text();
+
+      setMessages(prev => [...prev, { role: 'bot', text }]);
     } catch (error) {
-      console.error('💬 Chat error:', error.message);
-      
-      // Use accurate fallback
-      const fallbackReply = getFallbackResponse(userMessage.content);
-      setMessages(prev => [...prev, { role: 'assistant', content: fallbackReply }]);
-      setApiStatus('offline');
-      
+      console.error("Chatbot Error Detail:", error);
+      // To help the user debug, I'll show a more descriptive message if possible
+      let errorMessage = "Sorry, I'm having trouble connecting right now. ";
+      if (error.message?.includes("API_KEY_INVALID")) {
+        errorMessage += "Your API key seems to be invalid.";
+      } else if (error.message?.includes("429")) {
+        errorMessage += "Rate limit exceeded. Please wait a moment.";
+      } else {
+        errorMessage += "Please check your console for details or try again later.";
+      }
+
+      setMessages(prev => [...prev, { role: 'bot', text: errorMessage }]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const clearChat = () => {
-    setMessages([{ 
-      role: 'assistant', 
-      content: "👋 Chat cleared! I'm Kashif's assistant. Ask about his MERN skills, Tripsy project, EncoderBytes internship, or contact info!" 
-    }]);
-    localStorage.removeItem('kashif-portfolio-chat');
-  };
 
   return (
-    <>
-      {/* Floating Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 
-                   text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 
-                   hover:scale-105 hover:rotate-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        aria-label={isOpen ? 'Close chat' : 'Open chat with Kashif\'s assistant'}
-      >
-        {isOpen ? (
-          <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <div className="relative">
-            <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            {apiStatus === 'offline' && (
-              <span className="absolute -top-1 -right-1 size-3 bg-yellow-400 rounded-full border-2 border-white animate-pulse" title="Using quick responses" />
-            )}
-          </div>
-        )}
-      </button>
-
-      {/* Chat Window */}
-      {isOpen && (
-        <div className="fixed bottom-20 right-6 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 
-                        rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 
-                        overflow-hidden animate-fade-in-up flex flex-col max-h-[32rem]">
-          
-          {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="size-10 rounded-full bg-white/20 flex items-center justify-center text-lg">🤖</div>
-              <div>
-                <h3 className="font-semibold leading-tight">Kashif's Assistant</h3>
-                <p className="text-xs opacity-90 flex items-center gap-1">
-                  <span className={`size-2 rounded-full animate-pulse ${apiStatus === 'online' ? 'bg-green-400' : 'bg-yellow-400'}`} />
-                  {apiStatus === 'online' ? 'AI Mode' : 'Quick Mode'}
-                </p>
+    <div className="fixed bottom-6 right-6 z-50">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="bg-gray-900 border border-blue-500/30 rounded-2xl shadow-2xl w-80 sm:w-96 overflow-hidden mb-4 flex flex-col max-h-[500px]"
+          >
+            {/* Header */}
+            <div className="bg-blue-600 p-4 flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <FaRobot className="text-white text-xl" />
+                <span className="text-white font-bold">Kashif AI</span>
               </div>
-            </div>
-            <button onClick={clearChat} className="p-2 hover:bg-white/20 rounded-lg transition-colors" aria-label="Clear chat">
-              <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50 dark:bg-gray-900">
-            {messages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-in`}>
-                <div className={`max-w-[85%] p-3 rounded-2xl ${
-                  msg.role === 'user' 
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-br-md' 
-                    : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 rounded-bl-md shadow-sm'
-                }`}>
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
-                </div>
-              </div>
-            ))}
-            
-            {/* Typing Indicator */}
-            {isLoading && (
-              <div className="flex justify-start animate-slide-in">
-                <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl rounded-bl-md p-3 shadow-sm">
-                  <div className="flex gap-1">
-                    <span className="size-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="size-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="size-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input Form */}
-          <form onSubmit={handleSend} className="p-3 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about MERN skills, Tripsy, EncoderBytes, or contact..."
-                disabled={isLoading}
-                className="flex-1 px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 
-                           rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 
-                           bg-gray-50 dark:bg-gray-700 dark:text-white placeholder-gray-400
-                           disabled:opacity-50 transition-all"
-                aria-label="Type your message"
-              />
-              <button
-                type="submit"
-                disabled={!input.trim() || isLoading}
-                className="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white 
-                           rounded-full hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 
-                           disabled:cursor-not-allowed transition-all flex items-center justify-center"
-                aria-label="Send message"
-              >
-                {isLoading ? (
-                  <svg className="size-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                ) : (
-                  <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                )}
+              <button onClick={() => setIsOpen(false)} className="text-white hover:text-gray-200 transition">
+                <FaTimes />
               </button>
             </div>
-            <p className="text-[10px] text-center text-gray-400 mt-2">
-              {apiStatus === 'online' ? '✨ AI-powered • Based on your portfolio' : '⚡ Quick responses • AI unavailable'}
-            </p>
-          </form>
-        </div>
-      )}
-    </>
-  );
-}
 
+            {/* Messages */}
+            <div
+              ref={scrollRef}
+              className="flex-1 p-4 overflow-y-auto space-y-4 min-h-[300px] bg-black/40"
+            >
+              {messages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.role === 'user'
+                    ? 'bg-blue-600 text-white rounded-br-none'
+                    : 'bg-gray-800 text-gray-200 rounded-bl-none'
+                    }`}>
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-gray-800 text-gray-200 p-3 rounded-2xl rounded-bl-none text-sm animate-pulse">
+                    Thinking...
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Input */}
+            <div className="p-4 border-t border-gray-800 bg-gray-900">
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  placeholder="Ask me something..."
+                  className="w-full bg-gray-800 text-white rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm"
+                />
+                <button
+                  onClick={handleSend}
+                  disabled={isLoading}
+                  className="absolute right-2 text-blue-500 hover:text-blue-400 disabled:text-gray-600 transition"
+                >
+                  <FaPaperPlane />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className="bg-blue-600 text-white p-4 rounded-full shadow-2xl hover:bg-blue-700 transition-colors flex items-center justify-center"
+      >
+        {isOpen ? <FaTimes size={24} /> : <FaComments size={24} />}
+      </motion.button>
+    </div>
+  );
+};
+
+export default Chatbot;
