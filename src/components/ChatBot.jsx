@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaComments, FaTimes, FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+// ==================== YOUR EXACT DATA & LOGIC (UNCHANGED) ====================
 const portfolioData = {
   name: "Kashif Khan",
   role: "MERN Stack Developer",
@@ -59,7 +60,6 @@ Strict Requirements:
 
 Context: ${JSON.stringify(portfolioData)}`;
 
-
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -96,14 +96,11 @@ const Chatbot = () => {
 
     try {
       const genAI = new GoogleGenerativeAI(apiKey.trim());
-      // Try gemini-1.5-flash-latest as it is more likely to exist in v1beta than the exact version for some keys
       const model = genAI.getGenerativeModel({
         model: "gemini-2.5-flash",
         systemInstruction: SYSTEM_PROMPT,
       });
 
-
-      // Filter out the initial bot greeting and map to Gemini format
       const history = messages
         .filter(msg => msg.text !== 'Hi! I\'m Kashif\'s assistant. How can I help you today?')
         .map(msg => ({
@@ -116,7 +113,6 @@ const Chatbot = () => {
         generationConfig: {
           maxOutputTokens: 500,
         },
-
       });
 
       const result = await chat.sendMessage(userMessage);
@@ -126,7 +122,6 @@ const Chatbot = () => {
       setMessages(prev => [...prev, { role: 'bot', text }]);
     } catch (error) {
       console.error("Chatbot Error Detail:", error);
-      // To help the user debug, I'll show a more descriptive message if possible
       let errorMessage = "Sorry, I'm having trouble connecting right now. ";
       if (error.message?.includes("API_KEY_INVALID")) {
         errorMessage += "Your API key seems to be invalid.";
@@ -135,91 +130,110 @@ const Chatbot = () => {
       } else {
         errorMessage += "Please check your console for details or try again later.";
       }
-
       setMessages(prev => [...prev, { role: 'bot', text: errorMessage }]);
     } finally {
       setIsLoading(false);
     }
   };
 
-
+  // ==================== UI FIXED (LIGHT + DARK MODE) ====================
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-5 right-5 z-50 font-mono">
+
+      {/* Toggle Button */}
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-12 h-12 flex items-center justify-center rounded-lg
+        bg-white dark:bg-[#1e1e1e]
+        border border-black/10 dark:border-white/10
+        text-indigo-500 dark:text-[#4ec9b0]
+        hover:border-indigo-500 dark:hover:border-[#4ec9b0]
+        transition-colors shadow-lg"
+      >
+        {isOpen ? <FaTimes size={18} /> : <FaComments size={18} />}
+      </motion.button>
+
+      {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="bg-gray-900 border border-blue-500/30 rounded-2xl shadow-2xl w-80 sm:w-96 overflow-hidden mb-4 flex flex-col max-h-[500px]"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
+            className="absolute bottom-16 right-0 w-80 sm:w-96 max-h-[500px]
+            flex flex-col rounded-lg overflow-hidden shadow-2xl
+            bg-white dark:bg-[#1e1e1e]
+            border border-black/10 dark:border-white/10"
           >
+
             {/* Header */}
-            <div className="bg-blue-600 p-4 flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <FaRobot className="text-white text-xl" />
-                <span className="text-white font-bold">Kashif AI</span>
-              </div>
-              <button onClick={() => setIsOpen(false)} className="text-white hover:text-gray-200 transition">
-                <FaTimes />
+            <div className="flex justify-between px-4 py-2.5
+            bg-gray-100 dark:bg-[#252526]
+            border-b border-black/10 dark:border-white/10">
+              <span className="text-xs text-gray-700 dark:text-gray-300">
+                Kashif AI Assistant
+              </span>
+              <button onClick={() => setIsOpen(false)}>
+                <FaTimes size={12} />
               </button>
             </div>
 
             {/* Messages */}
             <div
               ref={scrollRef}
-              className="flex-1 p-4 overflow-y-auto space-y-4 min-h-[300px] bg-black/40"
+              className="flex-1 p-4 overflow-y-auto space-y-3
+              bg-white dark:bg-[#1e1e1e]
+              text-gray-700 dark:text-[#d4d4d4] text-xs"
             >
               {messages.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.role === 'user'
-                    ? 'bg-blue-600 text-white rounded-br-none'
-                    : 'bg-gray-800 text-gray-200 rounded-bl-none'
+                  <div className={`max-w-[85%] px-3 py-2 rounded
+                    ${msg.role === 'user'
+                      ? 'bg-indigo-500 text-white'
+                      : 'bg-gray-100 dark:bg-[#2d2d2d] border border-black/10 dark:border-white/10 text-gray-800 dark:text-[#ce9178]'
                     }`}>
                     {msg.text}
                   </div>
                 </div>
               ))}
+
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-800 text-gray-200 p-3 rounded-2xl rounded-bl-none text-sm animate-pulse">
-                    Thinking...
+                  <div className="bg-gray-100 dark:bg-[#2d2d2d] border border-black/10 dark:border-white/10 px-3 py-2 rounded text-xs text-gray-500 dark:text-gray-400">
+                    Processing...
                   </div>
                 </div>
               )}
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-gray-800 bg-gray-900">
-              <div className="relative flex items-center">
+            <div className="p-3 border-t border-black/10 dark:border-white/10
+            bg-gray-100 dark:bg-[#252526]">
+              <div className="flex items-center gap-2">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask me something..."
-                  className="w-full bg-gray-800 text-white rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm"
+                  placeholder="Type your query..."
+                  disabled={isLoading}
+                  className="flex-1 bg-transparent text-gray-800 dark:text-white placeholder-gray-400 text-xs focus:outline-none"
                 />
                 <button
                   onClick={handleSend}
-                  disabled={isLoading}
-                  className="absolute right-2 text-blue-500 hover:text-blue-400 disabled:text-gray-600 transition"
+                  disabled={isLoading || !input.trim()}
+                  className="text-indigo-500 dark:text-[#4ec9b0] disabled:text-gray-400"
                 >
-                  <FaPaperPlane />
+                  <FaPaperPlane size={12} />
                 </button>
               </div>
             </div>
+
           </motion.div>
         )}
       </AnimatePresence>
-
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-blue-600 text-white p-4 rounded-full shadow-2xl hover:bg-blue-700 transition-colors flex items-center justify-center"
-      >
-        {isOpen ? <FaTimes size={24} /> : <FaComments size={24} />}
-      </motion.button>
     </div>
   );
 };

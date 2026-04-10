@@ -9,7 +9,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-6 bg-black text-white text-center">
+    <footer className="py-6 bg-white dark:bg-black text-slate-900 dark:text-white text-center border-t border-black/5 dark:border-white/5 transition-colors duration-300">
       <p>
         © 2026 Kashif Khan |
         <button onClick={downloadCV} className="ml-2 hover:text-blue-400">

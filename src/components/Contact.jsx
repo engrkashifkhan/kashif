@@ -33,7 +33,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gray-800 text-white">
+    <section id="contact" className="py-20 bg-slate-50 dark:bg-gray-800 text-slate-900 dark:text-white transition-colors duration-300">
       <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8">
 
         {/* Left Side */}
@@ -58,14 +58,14 @@ const Contact = () => {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="bg-black p-6 rounded-lg"
+          className="bg-white dark:bg-black p-6 rounded-2xl shadow-xl border border-black/5 dark:border-white/5"
         >
           <input
             type="text"
             name="user_name"   // ✅ REQUIRED for EmailJS
             placeholder="Name"
             required
-            className="w-full p-3 mb-4 bg-gray-800"
+            className="w-full p-3 mb-4 bg-slate-50 dark:bg-gray-800 border border-black/10 dark:border-white/10 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <input
@@ -73,7 +73,7 @@ const Contact = () => {
             name="user_email"  // ✅ REQUIRED
             placeholder="Email"
             required
-            className="w-full p-3 mb-4 bg-gray-800"
+            className="w-full p-3 mb-4 bg-slate-50 dark:bg-gray-800 border border-black/10 dark:border-white/10 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <textarea
@@ -81,7 +81,7 @@ const Contact = () => {
             name="user_message" 
             placeholder="Message"
             required
-            className="w-full p-3 mb-4 bg-gray-800 h-32"
+            className="w-full p-3 mb-4 bg-slate-50 dark:bg-gray-800 border border-black/10 dark:border-white/10 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
           />
 
           <button className="w-full bg-blue-600 py-3 rounded hover:bg-blue-700 transition">

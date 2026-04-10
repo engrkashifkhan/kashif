@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -10,7 +10,21 @@ import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    if (saved !== null) return JSON.parse(saved);
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+  }, [darkMode]);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,7 +57,7 @@ function App() {
   };
 
   return (
-    <div className={`${darkMode ? 'bg-black text-white' : 'bg-white text-black'} min-h-screen overflow-x-hidden`}>
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] text-slate-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
       <Header
         darkMode={darkMode}
         setDarkMode={setDarkMode}

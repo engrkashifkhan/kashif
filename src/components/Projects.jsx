@@ -34,9 +34,9 @@ const projects = [
 ];
 
 const Projects = ({ fadeInUp, stagger }) => (
-  <section id="projects" className="relative py-24 bg-[#0A0A0A] overflow-hidden">
+  <section id="projects" className="relative py-24 bg-white dark:bg-[#0A0A0A] overflow-hidden transition-colors duration-300">
     {/* Terminal grid background */}
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(56,189,248,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(56,189,248,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+    <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(56,189,248,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(56,189,248,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
     
     {/* Ambient glow */}
     <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
@@ -51,7 +51,7 @@ const Projects = ({ fadeInUp, stagger }) => (
               /src/projects
             </span>
           </div>
-          <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
             Project <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-emerald-400">Files</span>
           </h3>
         </div>
@@ -68,7 +68,7 @@ const Projects = ({ fadeInUp, stagger }) => (
             href={p.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative block bg-[#0F1117] border border-white/5 rounded-xl overflow-hidden transition-all duration-300 hover:border-cyan-500/40 hover:bg-[#13161F]"
+            className="group relative block bg-slate-50 dark:bg-[#0F1117] border border-black/5 dark:border-white/5 rounded-xl overflow-hidden transition-all duration-300 hover:border-cyan-500/40 hover:bg-slate-100 dark:hover:bg-[#13161F]"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -76,7 +76,7 @@ const Projects = ({ fadeInUp, stagger }) => (
             {...fadeInUp}
           >
             {/* Terminal Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-[#0B0D12]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-black/5 dark:border-white/5 bg-slate-100 dark:bg-[#0B0D12]">
               <div className="flex items-center gap-2">
                 <FiFolder className="text-amber-400" size={14} />
                 <span className="text-xs font-mono text-slate-400">{p.title.toLowerCase().replace(/\s+/g, '-')}.jsx</span>
@@ -106,7 +106,7 @@ const Projects = ({ fadeInUp, stagger }) => (
               </div>
 
               {/* Title */}
-              <h4 className="text-lg font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors">
+              <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-300 transition-colors">
                 {p.title}
               </h4>
 
@@ -129,12 +129,12 @@ const Projects = ({ fadeInUp, stagger }) => (
               </div>
 
               {/* Description */}
-              <p className="text-slate-500 text-sm leading-relaxed mb-4">
-                <span className="text-slate-600">// </span>{p.desc}
+              <p className="text-slate-600 dark:text-slate-500 text-sm leading-relaxed mb-4">
+                <span className="text-slate-400 dark:text-slate-600">// </span>{p.desc}
               </p>
 
               {/* Footer: Link + Index */}
-              <div className="flex items-center justify-between pt-3 border-t border-white/5">
+              <div className="flex items-center justify-between pt-3 border-t border-black/5 dark:border-white/5">
                 <span className="text-[10px] font-mono text-slate-600">index.{i + 1}</span>
                 <div className="flex items-center gap-1.5 text-xs text-emerald-400 group-hover:gap-2 transition-all">
                   <span>Live Preview</span>
