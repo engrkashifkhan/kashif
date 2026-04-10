@@ -37,6 +37,7 @@ const Contact = () => {
       <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8">
 
         {/* Left Side */}
+        
         <div className="space-y-4 text-center">
           <h3 className="text-4xl font-bold mb-6">Contact</h3>
           <p><FaPhone className="inline mr-2" /> 03339447275</p>
@@ -97,4 +98,9 @@ const Contact = () => {
 };
 
 export default Contact;
+
+
+
+
+
 
