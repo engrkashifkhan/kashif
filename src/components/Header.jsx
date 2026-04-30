@@ -59,10 +59,10 @@ const Header = ({ darkMode, setDarkMode, menuOpen, setMenuOpen, handleScroll }) 
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 ">
           <motion.button
             onClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all"
+            className="p-2 hidden rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all"
             whileHover={{ rotate: 15, scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Toggle theme"
@@ -118,7 +118,7 @@ const Header = ({ darkMode, setDarkMode, menuOpen, setMenuOpen, handleScroll }) 
                     {item.label}
                   </motion.button>
                 ))}
-                <div className="mt-6 pt-6 border-t border-black/10 dark:border-white/10">
+                <div className="hidden mt-6 pt-6 border-t border-black/10 dark:border-white/10">
                   <button
                     onClick={() => setDarkMode(!darkMode)}
                     className="flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2 w-full"

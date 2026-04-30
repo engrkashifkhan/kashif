@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaComments, FaTimes, FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getGroqChatCompletion } from '../services/groqService';
 
 // ==================== YOUR EXACT DATA & LOGIC (UNCHANGED) ====================
 const portfolioData = {
@@ -78,12 +78,12 @@ const Chatbot = () => {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY || "";
 
-    if (!apiKey) {
+    if (!apiKey || apiKey === "gsk_your_key_here") {
       setMessages(prev => [...prev,
       { role: 'user', text: input },
-      { role: 'bot', text: 'Please set a valid Gemini API Key in your .env file.' }
+      { role: 'bot', text: 'Please set a valid Groq API Key (VITE_GROQ_API_KEY) in your .env file.' }
       ]);
       setInput('');
       return;
@@ -95,40 +95,29 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      const genAI = new GoogleGenerativeAI(apiKey.trim());
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash",
-        systemInstruction: SYSTEM_PROMPT,
-      });
-
+      // Map history to Groq format (user/assistant)
       const history = messages
-        .filter(msg => msg.text !== 'Hi! I\'m Kashif\'s assistant. How can I help you today?')
+        .filter(msg => msg.text !== "Hi! I'm Kashif's assistant. How can I help you today?")
         .map(msg => ({
-          role: msg.role === 'user' ? 'user' : 'model',
-          parts: [{ text: msg.text }],
+          role: msg.role === 'user' ? 'user' : 'assistant',
+          content: msg.text,
         }));
 
-      const chat = model.startChat({
-        history: history,
-        generationConfig: {
-          maxOutputTokens: 500,
-        },
-      });
+      // Add the current user message to history
+      history.push({ role: 'user', content: userMessage });
 
-      const result = await chat.sendMessage(userMessage);
-      const response = await result.response;
-      const text = response.text();
+      const text = await getGroqChatCompletion(history, SYSTEM_PROMPT);
 
       setMessages(prev => [...prev, { role: 'bot', text }]);
     } catch (error) {
       console.error("Chatbot Error Detail:", error);
       let errorMessage = "Sorry, I'm having trouble connecting right now. ";
-      if (error.message?.includes("API_KEY_INVALID")) {
-        errorMessage += "Your API key seems to be invalid.";
-      } else if (error.message?.includes("429")) {
+      if (error.message?.includes("API key")) {
+        errorMessage += "Your Groq API key seems to be invalid.";
+      } else if (error.status === 429) {
         errorMessage += "Rate limit exceeded. Please wait a moment.";
       } else {
-        errorMessage += "Please check your console for details or try again later.";
+        errorMessage += "Please check your connection or try again later.";
       }
       setMessages(prev => [...prev, { role: 'bot', text: errorMessage }]);
     } finally {
