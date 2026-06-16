@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
-const Header = ({ darkMode, setDarkMode, menuOpen, setMenuOpen, handleScroll }) => {
+const Header = ({ menuOpen, setMenuOpen, handleScroll }) => {
   const navItems = [
     { label: 'About', id: 'about' },
     { label: 'Skills', id: 'skills' },
@@ -61,16 +61,6 @@ const Header = ({ darkMode, setDarkMode, menuOpen, setMenuOpen, handleScroll }) 
         {/* Right Actions */}
         <div className="flex items-center gap-3 ">
           <motion.button
-            onClick={() => setDarkMode(!darkMode)}
-            className="p-2 hidden rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all"
-            whileHover={{ rotate: 15, scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle theme"
-          >
-            {darkMode ? <FaSun size={16} /> : <FaMoon size={16} />}
-          </motion.button>
-
-          <motion.button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden p-2 rounded-full text-slate-500 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all"
             whileTap={{ scale: 0.9 }}
@@ -118,15 +108,6 @@ const Header = ({ darkMode, setDarkMode, menuOpen, setMenuOpen, handleScroll }) 
                     {item.label}
                   </motion.button>
                 ))}
-                <div className="mt-6 pt-6 border-t border-black/10 dark:border-white/10">
-                  <button
-                    onClick={() => setDarkMode(!darkMode)}
-                    className="flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2 w-full"
-                  >
-                    {darkMode ? <FaSun size={16} /> : <FaMoon size={16} />}
-                    <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-                  </button>
-                </div>
               </div>
             </motion.div>
           </>
