@@ -1,96 +1,3 @@
-// import React from 'react';
-// import { motion } from 'framer-motion';
-
-// const Skills = ({ fadeInUp, stagger }) => {
-//   const skills = [
-//     { name: 'HTML', level: 90 },
-//     { name: 'CSS', level: 85 },
-//     { name: 'JavaScript', level: 80 },
-//     { name: 'React.js', level: 85 },
-//     { name: 'Tailwind CSS', level: 90 },
-//     { name: 'Bootstrap', level: 50 },
-//     { name: 'Framer Motion', level: 75 },
-//     { name: 'MongoDB', level: 60 },
-//     { name: 'Express.js', level: 40 },
-//     { name: 'Node.js', level: 20 },
-//   ];
-
-//   return (
-//     <section id="skills" className="relative py-24 bg-[#0B0F19] overflow-hidden">
-//       {/* Soft radial background glow */}
-//       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/8 rounded-full blur-[120px] -z-10 pointer-events-none" />
-      
-//       <div className="container mx-auto px-6 relative z-10">
-//         <motion.h3 
-//           className="text-3xl md:text-4xl font-bold text-center mb-16 tracking-tight"
-//           {...fadeInUp}
-//         >
-//           <span className="text-white">Technical </span>
-//           <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-300">
-//             Proficiency
-//           </span>
-//         </motion.h3>
-
-//         <motion.div 
-//           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" 
-//           {...stagger}
-//         >
-//           {skills.map((skill, index) => (
-//             <motion.div
-//               key={skill.name}
-//               className="group relative bg-[#111827] border border-gray-800 rounded-xl p-5 transition-all duration-300 hover:border-indigo-500/40 hover:bg-[#151C2C] hover:shadow-[0_8px_30px_-12px_rgba(99,102,241,0.15)]"
-//               whileHover={{ y: -4 }}
-//               {...fadeInUp}
-//             >
-//               <div className="flex justify-between items-center mb-3">
-//                 <h4 className="text-base font-semibold text-gray-100 tracking-wide">
-//                   {skill.name}
-//                 </h4>
-//                 <span className="text-xs font-mono text-indigo-300/80 bg-indigo-500/10 px-2 py-0.5 rounded">
-//                   {skill.level}%
-//                 </span>
-//               </div>
-
-//               <div className="relative w-full bg-gray-800/60 rounded-full h-1.5 overflow-hidden">
-//                 <motion.div
-//                   className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400"
-//                   initial={{ width: 0 }}
-//                   whileInView={{ width: `${skill.level}%` }}
-//                   viewport={{ once: true }}
-//                   transition={{ duration: 1.1, delay: index * 0.06, ease: [0.25, 0.1, 0.25, 1] }}
-//                 />
-//                 {/* Animated tip dot */}
-//                 <motion.div
-//                   className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.6)]"
-//                   initial={{ left: 0, opacity: 0 }}
-//                   whileInView={{ left: `${skill.level}%`, opacity: 1 }}
-//                   viewport={{ once: true }}
-//                   transition={{ duration: 1.1, delay: index * 0.06, ease: [0.25, 0.1, 0.25, 1] }}
-//                 />
-//               </div>
-//             </motion.div>
-//           ))}
-//         </motion.div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Skills;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -188,7 +95,7 @@ const Skills = ({ fadeInUp, stagger }) => {
                       transition={{ duration: 1.4, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
                     />
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Applied in {Math.max(3, Math.ceil(skill.level / 10))}+ projects</p>
+                  {/* <p className="text-xs text-slate-500 dark:text-slate-400">Applied in {Math.max(3, Math.ceil(skill.level / 10))}+ projects</p> */}
                 </div>
               </div>
 
