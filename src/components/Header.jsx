@@ -118,7 +118,7 @@ const Header = ({ darkMode, setDarkMode, menuOpen, setMenuOpen, handleScroll }) 
                     {item.label}
                   </motion.button>
                 ))}
-                <div className="hidden mt-6 pt-6 border-t border-black/10 dark:border-white/10">
+                <div className="mt-6 pt-6 border-t border-black/10 dark:border-white/10">
                   <button
                     onClick={() => setDarkMode(!darkMode)}
                     className="flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2 w-full"
