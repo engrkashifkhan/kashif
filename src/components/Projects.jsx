@@ -3,6 +3,13 @@ import { motion } from 'framer-motion';
 import { FiExternalLink, FiFolder, FiCode, FiPlay } from 'react-icons/fi';
 
 const projects = [
+   {
+    img: "skyline.PNG",
+    title: "SkyLine Website",
+    tech: "React.js, Tailwind CSS, Localization",
+    desc: "Client-based website built during EncoderBytes training.",
+    link: "https://skyline-red-seven.vercel.app/",
+  },
   {
     img: "tripsy.PNG",
     title: "Tripsy Website",
