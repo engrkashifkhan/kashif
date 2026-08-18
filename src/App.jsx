@@ -36,13 +36,13 @@ function App() {
 
   const downloadCV = () => {
     const link = document.createElement('a');
-    link.href = '/CV.pdf';
+    link.href = '/MyCV.pdf';
     link.download = 'Kashif_Khan_CV.pdf';
     link.click();
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] text-slate-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
+    <div className="min-h-screen  dark:bg-[#0A0A0A] text-slate-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
       <Header
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
