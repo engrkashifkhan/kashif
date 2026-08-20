@@ -203,19 +203,11 @@ const Hero = ({ fadeInUp, handleScroll }) => {
                 applications, and AI-powered software solutions.
               </p>
 
-              <p>
-                I build responsive and scalable web applications using
-                React.js, JavaScript, Node.js, Express.js, MongoDB,
-                and Tailwind CSS. My work combines full-stack web
-                development with Artificial Intelligence and Prompt
-                Engineering to create practical digital products.
-              </p>
-
-              <p>
+              {/* <p>
                 As a Web Developer and MERN Stack Developer, I enjoy
                 transforming ideas into fast, user-focused applications
                 with clean interfaces and reliable functionality.
-              </p>
+              </p> */}
 
             </div>
 
