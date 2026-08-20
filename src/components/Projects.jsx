@@ -2,8 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FiExternalLink, FiFolder, FiCode, FiPlay } from 'react-icons/fi';
 
+
+
+
 const projects = [
-   {
+  {
     img: "skyline.PNG",
     title: "SkyLine Website",
     tech: "React.js, Tailwind CSS, Localization",
@@ -39,6 +42,45 @@ const projects = [
     link: "https://encoder-byte-q6rj.vercel.app/",
   },
 ];
+
+// const projects = [
+//    {
+//     img: "skyline.PNG",
+//     title: "SkyLine Website",
+//     tech: "React.js, Tailwind CSS, Localization",
+//     desc: "Client-based website built during EncoderBytes training.",
+//     link: "https://skyline-red-seven.vercel.app/",
+//   },
+  
+//   {
+//     img: "tripsy.PNG",
+//     title: "Tripsy Website",
+//     tech: "React.js, Tailwind CSS, Zustand",
+//     desc: "Practice-based travel website built during EncoderBytes training.",
+//     link: "https://tripsiy.vercel.app/",
+//   },
+//   {
+//     img: "ecommerce.PNG",
+//     title: "E-commerce Website",
+//     tech: "React.js, Tailwind, Framer Motion",
+//     desc: "Search, filtering, cart, wishlist & animations.",
+//     link: "https://ecommerce-web-design-weld.vercel.app/",
+//   },
+//   {
+//     img: "portfolio.PNG",
+//     title: "Portfolio Website",
+//     tech: "React.js, Tailwind CSS",
+//     desc: "Personal portfolio to showcase frontend skills.",
+//     link: "https://intern-intelligence-portfolio-delta.vercel.app/",
+//   },
+//   {
+//     img: "Encoder.PNG",
+//     title: "EncoderBytes Website",
+//     tech: "Next.js, Tailwind CSS",
+//     desc: "Homepage developed during training.",
+//     link: "https://encoder-byte-q6rj.vercel.app/",
+//   },
+// ];
 
 const Projects = ({ fadeInUp, stagger }) => (
   <section id="projects" className="relative py-24 bg-white dark:bg-[#0A0A0A] overflow-hidden transition-colors duration-300">
@@ -160,3 +202,16 @@ const Projects = ({ fadeInUp, stagger }) => (
 );
 
 export default Projects;
+
+
+
+
+
+
+
+
+
+
+
+
+
