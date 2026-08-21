@@ -108,22 +108,22 @@
 
     <meta
       property="og:image"
-      content="https://kashif-six.vercel.app/og-image.png"
+      content="https://kashif-six.vercel.app/kashif2.jpeg"
     />
 
     <meta
       property="og:image:width"
-      content="1200"
+      content="280"
     />
 
     <meta
       property="og:image:height"
-      content="630"
+      content="380"
     />
 
     <meta
       property="og:image:type"
-      content="image/png"
+      content="image/jpeg"
     />
 
     <meta
@@ -162,7 +162,7 @@
 
     <meta
       name="twitter:image"
-      content="https://kashif-six.vercel.app/og-image.png"
+      content="https://kashif-six.vercel.app/kashif2.jpeg"
     />
 
     <meta
@@ -178,9 +178,15 @@
       {
         "@context": "https://schema.org",
         "@type": "Person",
+        "@id": "https://kashif-six.vercel.app/#person",
         "name": "Kashif Khan",
         "url": "https://kashif-six.vercel.app/",
-        "image": "https://kashif-six.vercel.app/kashif2.jpeg",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://kashif-six.vercel.app/kashif2.jpeg",
+          "width": 280,
+          "height": 380
+        },
 
         "jobTitle": "Software Engineer",
 
@@ -240,9 +246,36 @@
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": "https://kashif-six.vercel.app/#website",
         "name": "Kashif Khan Portfolio",
         "url": "https://kashif-six.vercel.app/",
-        "description": "Official portfolio of Kashif Khan, Software Engineer, AI Engineer and Web Developer."
+        "description": "Official portfolio of Kashif Khan, Software Engineer, AI Engineer and Web Developer.",
+        "about": { "@id": "https://kashif-six.vercel.app/#person" },
+        "publisher": { "@id": "https://kashif-six.vercel.app/#person" }
+      }
+    </script>
+
+    <!-- =========================================
+         WEBPAGE STRUCTURED DATA
+    ========================================== -->
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://kashif-six.vercel.app/#webpage",
+        "url": "https://kashif-six.vercel.app/",
+        "name": "Kashif Khan | Software Engineer, AI Engineer & Web Developer",
+        "description": "Kashif Khan is a Software Engineer, AI Engineer and Web Developer specializing in React, MERN Stack development, Prompt Engineering and AI-powered applications.",
+        "isPartOf": { "@id": "https://kashif-six.vercel.app/#website" },
+        "about": { "@id": "https://kashif-six.vercel.app/#person" },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://kashif-six.vercel.app/kashif2.jpeg",
+          "width": 280,
+          "height": 380
+        },
+        "inLanguage": "en-US"
       }
     </script>
 
@@ -258,4 +291,3 @@
     ></script>
   </body>
 </html>
-
